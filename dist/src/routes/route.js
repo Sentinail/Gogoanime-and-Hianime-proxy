@@ -1,0 +1,20 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.router = void 0;
+const express_1 = __importDefault(require("express"));
+const proxy_1 = require("../controllers/proxy");
+const hianime_proxy_1 = require("../controllers/hianime-proxy");
+const m3u8_proxy_1 = require("../controllers/m3u8-proxy");
+exports.router = express_1.default.Router();
+exports.router.get('/hls-proxy', proxy_1.hlsProxy);
+exports.router.get('/quality-proxy', proxy_1.qualityProxy);
+exports.router.get('/segment-proxy', proxy_1.segmentProxy);
+exports.router.get('/hianime-hls-proxy', hianime_proxy_1.hianimeHlsProxy);
+exports.router.get('/hianime-quality-proxy', hianime_proxy_1.hianimeQaulityProxy);
+exports.router.get('/hianime-segment-proxy', hianime_proxy_1.hianimeSegmentProxy);
+exports.router.get('/m3u8-proxy', m3u8_proxy_1.m3u8Proxy);
+exports.router.get('/m3u8-quality-proxy', m3u8_proxy_1.m3u8QualityProxy);
+exports.router.get('/m3u8-segment-proxy', m3u8_proxy_1.m3u8SegmentProxy);
