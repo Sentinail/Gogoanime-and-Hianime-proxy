@@ -9,7 +9,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const route_1 = require("./routes/route");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
-const PORT = 4040;
+const PORT = 80;
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use((0, cors_1.default)({ origin: "*" }));
@@ -18,7 +18,13 @@ app.use((req, res, next) => {
     next();
 });
 app.get("/", (_, res) => {
-    res.send("gogoanime and hianime proxy");
+    const baseUrl = _.protocol + '://' + _.get('host');
+    res.send(`
+    <h1>gogoanime and hianime proxy</h1>
+    <p>Port: ${PORT}</p>
+    <p>Base URL: ${baseUrl}</p>
+    <p>Base URL Env: ${process.env.BASE_URL}</p>
+  `);
 });
 app.use('/', route_1.router);
 app.listen(PORT, () => console.log(`http://localhost:${PORT}`));

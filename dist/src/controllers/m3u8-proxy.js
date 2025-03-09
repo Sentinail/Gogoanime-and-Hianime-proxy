@@ -22,7 +22,7 @@ const m3u8Proxy = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             responseType: 'text',
         });
         const editedUrl = (0, helper_1.editUrl)(url);
-        const proxyUrl = `${process.env.BASE_URL}/m3u8-quality-proxy?url=${editedUrl}`;
+        const proxyUrl = `${req.protocol + '://' + req.get('host')}/m3u8-quality-proxy?url=${editedUrl}`;
         const originalContent = response.data;
         const updatedContent = originalContent
             .split('\n')
@@ -57,7 +57,7 @@ const m3u8QualityProxy = (req, res) => __awaiter(void 0, void 0, void 0, functio
             responseType: 'text',
         });
         const editedUrl = (0, helper_1.editUrl)(url);
-        const proxyUrl = `${process.env.BASE_URL}/m3u8-segment-proxy?url=${editedUrl}`;
+        const proxyUrl = `${req.protocol + '://' + req.get('host')}/m3u8-segment-proxy?url=${editedUrl}`;
         const originalContent = response.data;
         const updatedContent = originalContent
             .split('\n')

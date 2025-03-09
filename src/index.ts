@@ -6,7 +6,7 @@ import { router } from './routes/route';
 dotenv.config();
 
 const app = express();
-const PORT = 4040
+const PORT = 80;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -17,7 +17,13 @@ app.use((req, res, next) => {
 })
 
 app.get("/", (_, res) => {
-  res.send("gogoanime and hianime proxy");
+  const baseUrl = _.protocol + '://' + _.get('host');
+  res.send(`
+    <h1>gogoanime and hianime proxy</h1>
+    <p>Port: ${PORT}</p>
+    <p>Base URL: ${baseUrl}</p>
+    <p>Base URL Env: ${process.env.BASE_URL}</p>
+  `);
 });
 app.use('/', router);
 

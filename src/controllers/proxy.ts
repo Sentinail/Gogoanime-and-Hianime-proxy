@@ -8,7 +8,7 @@ export const hlsProxy = async (req: Request, res: Response) => {
       responseType: 'text',
     });
     const originalContent = response.data as string;
-    const proxyBaseUrl = `${process.env.BASE_URL}/quality-proxy?url=${encodeURIComponent(url.split('/ep')[0])}`
+    const proxyBaseUrl = `${req.protocol + '://' + req.get('host')}/quality-proxy?url=${encodeURIComponent(url.split('/ep')[0])}`
     const updatedContent = originalContent
       .split('\n')
       .map(line => {
@@ -36,7 +36,7 @@ export const qualityProxy = async (req: Request, res: Response) => {
       responseType: 'text',
     });
     const originalContent = response.data as string;
-    const proxyBaseUrl = `${process.env.BASE_URL}/segment-proxy?url=${url.split('/ep')[0]}`
+    const proxyBaseUrl = `${req.protocol + '://' + req.get('host')}/segment-proxy?url=${url.split('/ep')[0]}`
     const updatedContent = originalContent
       .split('\n')
       .map(line => {

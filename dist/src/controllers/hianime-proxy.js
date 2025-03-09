@@ -21,7 +21,7 @@ const hianimeHlsProxy = (req, res) => __awaiter(void 0, void 0, void 0, function
             responseType: 'text',
         });
         const originalContent = response.data;
-        const proxyBaseUrl = `${process.env.BASE_URL}/hianime-quality-proxy?url=${encodeURIComponent(url.split('/master')[0])}`;
+        const proxyBaseUrl = `${req.protocol + '://' + req.get('host')}/hianime-quality-proxy?url=${encodeURIComponent(url.split('/master')[0])}`;
         const updatedContent = originalContent
             .split('\n')
             .map((line) => {
@@ -50,7 +50,7 @@ const hianimeQaulityProxy = (req, res) => __awaiter(void 0, void 0, void 0, func
             responseType: 'text',
         });
         const originalContent = response.data;
-        const proxyBaseUrl = `${process.env.BASE_URL}/hianime-segment-proxy?url=${encodeURIComponent(url.split('/index')[0])}`;
+        const proxyBaseUrl = `${req.protocol + '://' + req.get('host')}/hianime-segment-proxy?url=${encodeURIComponent(url.split('/index')[0])}`;
         const updatedContent = originalContent
             .split('\n')
             .map((line) => {
