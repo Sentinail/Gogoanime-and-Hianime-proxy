@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import axios from "axios";
+import { getHost } from "../utils/helper";
 
 export const hlsProxy = async (req: Request, res: Response) => {
   try {
@@ -8,7 +9,7 @@ export const hlsProxy = async (req: Request, res: Response) => {
       responseType: 'text',
     });
     const originalContent = response.data as string;
-    const proxyBaseUrl = `${req.protocol + '://' + req.get('host')}/quality-proxy?url=${encodeURIComponent(url.split('/ep')[0])}`
+    const proxyBaseUrl = `${getHost(req)}/quality-proxy?url=${encodeURIComponent(url.split('/ep')[0])}`
     const updatedContent = originalContent
       .split('\n')
       .map(line => {
@@ -36,7 +37,7 @@ export const qualityProxy = async (req: Request, res: Response) => {
       responseType: 'text',
     });
     const originalContent = response.data as string;
-    const proxyBaseUrl = `${req.protocol + '://' + req.get('host')}/segment-proxy?url=${url.split('/ep')[0]}`
+    const proxyBaseUrl = `${getHost(req)}/segment-proxy?url=${url.split('/ep')[0]}`
     const updatedContent = originalContent
       .split('\n')
       .map(line => {

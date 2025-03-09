@@ -2,6 +2,7 @@ import  express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { router } from './routes/route';
+import { getHost } from './utils/helper';
 
 dotenv.config();
 
@@ -17,7 +18,7 @@ app.use((req, res, next) => {
 })
 
 app.get("/", (_, res) => {
-  const baseUrl = _.protocol + '://' + _.get('host');
+  const baseUrl = getHost(_);
   res.send(`
     <h1>gogoanime and hianime proxy</h1>
     <p>Port: ${PORT}</p>
@@ -25,7 +26,10 @@ app.get("/", (_, res) => {
     <p>Base URL Env: ${process.env.BASE_URL}</p>
   `);
 });
-app.use('/', router);
+app.use('/', (req, res, next) => {
+  console.log("Host:", getHost(req));
+  next();
+}, router);
 
 app.listen(PORT, () => console.log(`http://localhost:${PORT}`));
 

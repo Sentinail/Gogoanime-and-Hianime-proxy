@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Request, Response } from "express";
-import { editUrl } from "../utils/helper";
+import { editUrl, getHost } from "../utils/helper";
 
 export const m3u8Proxy = async (req: Request, res: Response) => {
   try {
@@ -9,7 +9,7 @@ export const m3u8Proxy = async (req: Request, res: Response) => {
       responseType: 'text',
     });
     const editedUrl = editUrl(url);
-    const proxyUrl = `${req.protocol + '://' + req.get('host')}/m3u8-quality-proxy?url=${editedUrl}`;
+    const proxyUrl = `${getHost(req)}/m3u8-quality-proxy?url=${editedUrl}`;
     const originalContent = response.data as string;
     const updatedContent = originalContent
       .split('\n')
@@ -44,7 +44,7 @@ export const m3u8QualityProxy = async (req: Request, res: Response) => {
       responseType: 'text',
     });
     const editedUrl = editUrl(url);
-    const proxyUrl = `${req.protocol + '://' + req.get('host')}/m3u8-segment-proxy?url=${editedUrl}`;
+    const proxyUrl = `${getHost(req)}/m3u8-segment-proxy?url=${editedUrl}`;
     const originalContent = response.data as string;
     const updatedContent = originalContent
       .split('\n')

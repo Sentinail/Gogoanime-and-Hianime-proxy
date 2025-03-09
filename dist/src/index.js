@@ -7,6 +7,7 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const route_1 = require("./routes/route");
+const helper_1 = require("./utils/helper");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const PORT = 80;
@@ -18,7 +19,7 @@ app.use((req, res, next) => {
     next();
 });
 app.get("/", (_, res) => {
-    const baseUrl = _.protocol + '://' + _.get('host');
+    const baseUrl = (0, helper_1.getHost)(_);
     res.send(`
     <h1>gogoanime and hianime proxy</h1>
     <p>Port: ${PORT}</p>
@@ -26,6 +27,9 @@ app.get("/", (_, res) => {
     <p>Base URL Env: ${process.env.BASE_URL}</p>
   `);
 });
-app.use('/', route_1.router);
+app.use('/', (req, res, next) => {
+    console.log("Host:", (0, helper_1.getHost)(req));
+    next();
+}, route_1.router);
 app.listen(PORT, () => console.log(`http://localhost:${PORT}`));
 exports.default = app;

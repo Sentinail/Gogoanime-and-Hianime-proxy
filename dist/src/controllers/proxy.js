@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.segmentProxy = exports.qualityProxy = exports.hlsProxy = void 0;
 const axios_1 = __importDefault(require("axios"));
+const helper_1 = require("../utils/helper");
 const hlsProxy = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const url = req.query.url;
@@ -21,7 +22,7 @@ const hlsProxy = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             responseType: 'text',
         });
         const originalContent = response.data;
-        const proxyBaseUrl = `${req.protocol + '://' + req.get('host')}/quality-proxy?url=${encodeURIComponent(url.split('/ep')[0])}`;
+        const proxyBaseUrl = `${(0, helper_1.getHost)(req)}/quality-proxy?url=${encodeURIComponent(url.split('/ep')[0])}`;
         const updatedContent = originalContent
             .split('\n')
             .map(line => {
@@ -49,7 +50,7 @@ const qualityProxy = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             responseType: 'text',
         });
         const originalContent = response.data;
-        const proxyBaseUrl = `${req.protocol + '://' + req.get('host')}/segment-proxy?url=${url.split('/ep')[0]}`;
+        const proxyBaseUrl = `${(0, helper_1.getHost)(req)}/segment-proxy?url=${url.split('/ep')[0]}`;
         const updatedContent = originalContent
             .split('\n')
             .map(line => {

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Request, Response } from "express";
+import { getHost } from "../utils/helper";
 
 export const hianimeHlsProxy = async (req: Request, res: Response) => {
   try {
@@ -8,7 +9,7 @@ export const hianimeHlsProxy = async (req: Request, res: Response) => {
       responseType: 'text',
     });
     const originalContent = response.data as string;
-    const proxyBaseUrl = `${req.protocol + '://' + req.get('host')}/hianime-quality-proxy?url=${encodeURIComponent(url.split('/master')[0])}`
+    const proxyBaseUrl = `${getHost(req)}/hianime-quality-proxy?url=${encodeURIComponent(url.split('/master')[0])}`
     const updatedContent = originalContent
     .split('\n')
     .map((line) => {
@@ -36,7 +37,7 @@ export const hianimeQaulityProxy = async (req: Request, res: Response) => {
       responseType: 'text',
     });
     const originalContent = response.data as string;
-    const proxyBaseUrl = `${req.protocol + '://' + req.get('host')}/hianime-segment-proxy?url=${encodeURIComponent(url.split('/index')[0])}`
+    const proxyBaseUrl = `${getHost(req)}/hianime-segment-proxy?url=${encodeURIComponent(url.split('/index')[0])}`
     const updatedContent = originalContent
     .split('\n')
     .map((line) => {
